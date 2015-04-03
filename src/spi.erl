@@ -153,7 +153,7 @@ call(Port, Cmd, Data) ->
     case erlang:port_control(Port, Cmd, Data) of
 	<<0>> ->
 	    ok;
-	E1=<<255,E/binary>> -> 
+	E1= <<255,E/binary>> -> 
         ?info({error,E1}),
 	    {error, erlang:binary_to_atom(E, latin1)};
 	<<1,Y>> -> {ok,Y};
