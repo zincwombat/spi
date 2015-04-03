@@ -124,7 +124,7 @@ static ErlDrvEntry spi_drv_entry;
 #define DLOG_NONE     -1
 
 #ifndef DLOG_DEFAULT
-#define DLOG_DEFAULT DLOG_NONE
+#define DLOG_DEFAULT DLOG_DEBUG
 #endif
 
 #define DLOG(level,file,line,args...) do {				\
