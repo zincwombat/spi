@@ -47,6 +47,10 @@
 
 -include("../include/spi.hrl").
 
+
+-define(info(Str),      lager:info("~p",[Str])).
+
+
 -define(SPI_PORT, spi_port).
 -define(SPI_SRV,  spi_srv).
 
@@ -145,10 +149,12 @@ encode_spi([],Acc,N) ->
     {N, lists:reverse(Acc)}.
 
 call(Port, Cmd, Data) ->
+    ?info({{port,Port},{cmd,Cmd},{data,Data}}),
     case erlang:port_control(Port, Cmd, Data) of
 	<<0>> ->
 	    ok;
-	<<255,E/binary>> -> 
+	E1=<<255,E/binary>> -> 
+        ?info({error,E1}),
 	    {error, erlang:binary_to_atom(E, latin1)};
 	<<1,Y>> -> {ok,Y};
 	<<2,Y:16/native-unsigned>> -> {ok, Y};
