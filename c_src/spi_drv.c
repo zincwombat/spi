@@ -323,6 +323,7 @@ static ErlDrvSSizeT spi_drv_ctl(ErlDrvData d,
     }
 
     case CMD_TRANSFER: {
+    DEBUGF("spi_drv: ctl: TRANSFER");
 	spi_dev_t** spp;
 	spi_dev_t* sp;
 	uint16_t   bus;
@@ -485,6 +486,7 @@ static ErlDrvSSizeT spi_drv_ctl(ErlDrvData d,
 ok:
     return ctl_reply(0, NULL, 0, rbuf, rsize);
 badarg:
+	DEBUGF("spi_drv: ctl: badarg");
     errno = EINVAL;
 error:
     {
