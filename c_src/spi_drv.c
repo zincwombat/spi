@@ -486,12 +486,15 @@ static ErlDrvSSizeT spi_drv_ctl(ErlDrvData d,
 ok:
     return ctl_reply(0, NULL, 0, rbuf, rsize);
 badarg:
-	DEBUGF("spi_drv: ctl: badarg");
-    errno = EINVAL;
+	{
+		DEBUGF("spi_drv: ctl: badarg");
+    	errno = EINVAL;
+    }
 error:
     {
+    	DEBUGF("spi_drv: ctl: error, errno=%u",errno);
         char* err_str = erl_errno_id(errno);
-	return ctl_reply(255, err_str, strlen(err_str), rbuf, rsize);
+		return ctl_reply(255, err_str, strlen(err_str), rbuf, rsize);
     }
 }
 
