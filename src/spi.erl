@@ -149,12 +149,11 @@ encode_spi([],Acc,N) ->
     {N, lists:reverse(Acc)}.
 
 call(Port, Cmd, Data) ->
-    ?info({{port,Port},{cmd,Cmd},{data,Data}}),
+    % ?info({{port,Port},{cmd,Cmd},{data,Data}}),
     case erlang:port_control(Port, Cmd, Data) of
 	<<0>> ->
 	    ok;
-	E1= <<255,E/binary>> -> 
-        ?info({error,E1}),
+	<<255,E/binary>> -> 
 	    {error, erlang:binary_to_atom(E, latin1)};
 	<<1,Y>> -> {ok,Y};
 	<<2,Y:16/native-unsigned>> -> {ok, Y};
